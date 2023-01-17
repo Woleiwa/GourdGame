@@ -1,0 +1,7 @@
+Monster:
+kunkun left 50 7 2 628 160 false
+goust back 120 9 1 720 148 false
+snake right 120 3 7 172 560 false
+Role:
+fighter front 120 80 80
+Bullet:

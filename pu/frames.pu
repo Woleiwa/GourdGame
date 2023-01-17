@@ -1,0 +1,135 @@
+@startuml
+class JFrame{
+
+}
+
+class DoubleGameFrame{
+    private World world
+    private int level
+    protected JLayeredPane jLayeredPane
+    protected ArrayList<DoubleCreatureLabel> creatureLabels 
+    protected boolean stop 
+    protected JLabel stopLabel
+    protected JLabel winLabel
+    protected JLabel failLabel
+    private int monster_num
+    private int killed_num 
+    private int role_died_num 
+    protected ArrayList<DoubleBulletLabel> bulletLabels
+    protected DoubleRoleLabel[] roleLabels
+    protected boolean over
+    protected boolean end
+    public DoubleGameFrame(String role1, String role2, int level)
+    public void test()
+    public void drawMap() 
+    public void readFromTxt() 
+    public void MonsterStart() 
+    public void Stop()
+    public void win() 
+    public void fail()
+    public boolean isEnd() 
+    synchronized public void killMonster()
+    public RoleLabel getRoleLabel(int index)
+    public void addBullet(DoubleBulletLabel bulletLabel)
+    public boolean bulletHitCreature(DoubleBulletLabel bulletLabel)
+    public void roleAtk(int index)
+    synchronized public void killRole()
+    public boolean getOver()
+    public void TypeAction(int index, char code)
+    public void PressAction(int index, char code)
+    public void ReleaseAction(int index, char code)
+}
+
+class ClientFrame{
+    private int index
+    private Client client
+    public ClientFrame(String role1, String role2, int level, int index) 
+    public void setClient(Client client) 
+    public void sendCommand(String command)
+    public void typeAction(char code)
+    public void pressAction(char code)
+    public void releaseAction(char code)
+    public void updateToString(String info)
+}
+
+class GameFrame{
+    private World world
+    private int level
+    private JLayeredPane jLayeredPane
+    private ArrayList<CreatureLabel> creatureLabels 
+    private RoleLabel roleLabel
+    public boolean stop 
+    private JLabel stopLabel
+    private JLabel winLabel
+    private JLabel failLabel
+    private int monster_num 
+    private int killed_num 
+    private ArrayList<BulletLabel> bulletLabels
+    private String content
+    private String[] contents
+    private boolean over 
+    public GameFrame(String role, int level) 
+    public GameFrame(String filepath)
+    public void drawMap()
+    public void readFromTxt() 
+    public void TypeAction(char code)
+    public void PressAction(char code)
+    public void ReleaseAction(char code)
+    public void addBullet(BulletLabel bulletLabel)
+    public boolean bulletHitCreature(BulletLabel bulletLabel)
+    public RoleLabel getRoleLabel()
+    public void roleAtk()
+    public void Stop()
+    public void win()
+    public void fail() 
+    public void saveToFile()
+    public void loadFromFile(String filepath)
+    public String getContent()
+    public String[] getContents()
+    synchronized public void killMonster()
+    public int getLevel()
+    public int getMonster_num()
+}
+
+class ResumeFrame {
+    private final String dir 
+    private File file
+    private ArrayList<String> file_list 
+    private int file_num 
+    private JComboBox<String> loadSelect
+    public ResumeFrame() 
+    public boolean isDir()
+    public int getFile_num()
+}
+
+class SelectFrame {
+
+    private JLayeredPane jLayeredPane
+    private JComboBox<String> roleSelect
+    private JComboBox<String> modSelect
+    private JComboBox<String> levelSelect
+
+    public SelectFrame()
+    public void Play()
+}
+
+class ServerFrame {
+    public ServerFrame(String role1, String role2, int level) 
+    public void conductCommand(int index, String command)
+    public String ToString(int index)
+}
+
+class StartFrame {
+    public StartFrame() 
+    public void Start() 
+    public void Resume() 
+}
+
+DoubleGameFrame --|>JFrame
+ClientFrame --|>DoubleGameFrame
+GameFrame --|>JFrame
+ResumeFrame --|>JFrame
+SelectFrame --|>JFrame
+ServerFrame --|>DoubleGameFrame
+StartFrame --|>JFrame
+@enduml

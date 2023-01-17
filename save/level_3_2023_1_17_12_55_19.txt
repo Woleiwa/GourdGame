@@ -1,0 +1,13 @@
+Monster:
+kunkun front 50 9 9 720 684 false
+devil back 120 14 8 1120 676 false
+hydreigon back 50 5 5 400 432 false
+skeleton left 100 13 8 1060 640 false
+Role:
+elf front 96 108 220
+Bullet:
+elf front 15 142 610
+elf front 15 118 560
+elf front 15 98 514
+elf right 15 478 138
+elf front 15 114 476

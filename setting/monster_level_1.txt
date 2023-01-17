@@ -1,0 +1,3 @@
+kunkun right (7,2)
+goust back (9,3)
+snake left (1,7)

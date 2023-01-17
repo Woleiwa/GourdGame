@@ -1,0 +1,188 @@
+@startuml
+
+class JLabel{
+
+}
+
+class BulletLabel{
+    private String name
+    protected String direction
+    protected int x,y,width,height
+    protected Timer timer
+    protected int speed
+    protected World world
+    protected boolean launcher
+    protected int atk
+    private GameFrame gameFrame
+    protected boolean able
+    public BulletLabel(String name, String direction, int x, int y, int width, int height, int speed)
+    public void move() 
+    public void launch()
+    public void setWorld(World world)
+    boolean blockedByWall()
+    public void setLauncher(boolean launcher)
+    public boolean getLauncher()
+    public void setAtk(int atk)
+    public int getAtk()
+    public void setGameFrame(GameFrame gameFrame)
+    public int get_x()
+    public int get_y()
+    public int get_width()
+    public int get_height()
+    public boolean getAble() 
+    public String getDirection()
+    public String getName() 
+}
+
+class CreatureLabel {
+    protected String name
+    protected Creature creature
+    protected CreatureThread thread
+    protected String direction
+    protected int index 
+    protected int cur_x 
+    protected int cur_y 
+    protected int width 
+    protected int height 
+    protected Timer timer
+    protected Timer bulletTimer
+    protected HpBar hpBar
+    protected Boolean detected 
+    protected Boolean stop 
+    protected GameFrame gameFrame
+    private boolean client
+    public CreatureLabel(String name, int x, int y, int w, int h, World world, String direction)
+    public void move()
+    public boolean changeDirection()
+    protected boolean accessible(int x, int y)
+    public void setThread(CreatureThread creatureThread)
+    public CreatureThread getThread()
+    public void Start() 
+    public void setHpBar(HpBar hpBar)
+    public Creature getCreature()
+    public void launchBullet()
+    public void setGameFrame(GameFrame gameFrame)
+    public void StartLaunch()
+    public String getName()
+    public void StartAtk()
+    public void attack()
+    synchronized public boolean hitByBullet(BulletLabel bullet)
+    public int get_x()
+    public int get_y()
+    public void setClient(boolean client)
+    synchronized public void getAtk()
+    public void setStop(boolean stop)
+    public String getDirection()
+    public int getCur_x()
+    public int getCur_y()
+    public boolean getDetected()
+    public void setDetected(Boolean detected)
+    public void setCur_x(int x)
+    public void setCur_y(int y)
+    synchronized public void updateHpBar()
+}
+
+class DoubleBulletLabel{
+    private DoubleGameFrame doubleGameFrame
+    private int attacker
+    private boolean[] emitDeath = new boolean[2]
+    public DoubleBulletLabel(String name, String direction, int x, int y, int width, int height, int speed)
+    public void setDoubleGameFrame(DoubleGameFrame doubleGameFrame)
+    public void setAttacker(int attacker)
+    public int getAttacker()
+    public void move() 
+    public String stringInfo()
+}
+
+class DoubleCreatureLabel {
+    private DoubleGameFrame doubleGameFrame
+    private int attacker_index
+    private boolean[] emit_death 
+    private boolean launch
+    public DoubleCreatureLabel(String name, int x, int y, int w, int h, World world, String direction) 
+    public void setDoubleGameFrame(DoubleGameFrame doubleGameFrame)
+    public boolean changeDirection() 
+    synchronized public boolean hitByBullet(DoubleBulletLabel bullet)
+    synchronized public void getAtk(int index)
+    public void move()
+    public void attack()
+    synchronized public void updateHpBar()
+    public void launchBullet()
+    public boolean isEmitDeath(int index)
+    public String stringInfo(int index)
+    public void update(String direction, String pic_index, String cur_x, String cur_y, String str_hp, String launch)
+    public void startClientLaunch()
+    public void clientLaunchBullet()
+}
+
+class RoleLabel {
+    protected String name
+    protected Role role
+    protected String direction
+    protected int index
+    protected int cur_x 
+    protected int cur_y 
+    protected int width 
+    protected int height 
+    protected Timer timer;
+    protected boolean movable 
+    protected HpBar hpBar
+    private GameFrame gameFrame
+    protected Timer bulletTimer
+    protected boolean launch
+    protected RoleMoveCommandStack moveStack 
+    protected RoleMoveCommandStack releaseStack 
+    protected boolean stop = false
+
+    public RoleLabel(String name, int x, int y, int w, int h, World world)\
+    public Role getRole()
+    public void setHpBar(HpBar hpBar)
+    public void move() 
+    protected boolean accessible(int x, int y)
+    private boolean blockedByWall(int x, int y) 
+    public void setDirection(char w)
+    public void startMove() 
+    public void endMove(char w) 
+    public void launchBullet()
+    public void setGameFrame(GameFrame gameFrame)
+    public void startAtk()
+    public void setLaunch(boolean launch)
+    public int get_x()
+    public int get_y()
+    synchronized public boolean hitByBullet(BulletLabel bullet)
+    public void updateHp()
+    public void attack()
+    public void setStop(boolean stop)
+    public String getDirection() 
+    public int getCur_x() 
+    public int getCur_y() 
+    public void setCur_x(int x)
+    public void setCur_y(int y)
+    public String getName()
+    public HpBar getHpBar()
+}
+
+class DoubleRoleLabel{
+    private boolean killed
+    private DoubleGameFrame doubleGameFrame
+    private int roleIndex
+    public DoubleRoleLabel(String name, int x, int y, int w, int h, World world) 
+    public void setIndex(int roleIndex)
+    public int getIndex()
+    public void launchBullet()
+    public void attack()
+    public void setDoubleGameFrame(DoubleGameFrame doubleGameFrame)
+    synchronized public void updateHp()
+    public String stringInfo()
+    public void update(String direction, String pic_index, String cur_x, String cur_y, String str_hp, String launch)
+    public void clientLaunchBullet()
+    public void startClientLaunch()
+}
+
+BulletLabel --|>JLabel
+CreatureLabel --|>JLabel
+DoubleCreatureLabel --|>CreatureLabel
+DoubleBulletLabel --|>BulletLabel
+RoleLabel --|>JLabel
+DoubleRoleLabel --|>RoleLabel
+@enduml

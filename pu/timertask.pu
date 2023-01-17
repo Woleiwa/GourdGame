@@ -1,0 +1,66 @@
+@startuml
+
+class TimerTask{
+
+}
+
+class BulletTask {
+    BulletLabel bulletLabel
+    public BulletTask(BulletLabel bulletLabel)
+    public void run()
+}
+
+class CreatureTask{
+    private CreatureLabel clabel
+    public CreatureTask(CreatureLabel clabel)
+    public void run() 
+}
+
+class CreatureBulletTask{
+    CreatureLabel creatureLabel
+    public CreatureBulletTask(CreatureLabel creatureLabel)
+    public void run()
+}
+
+class CreatureAttackTask{
+    CreatureLabel creatureLabel
+    public CreatureAttackTask(CreatureLabel creatureLabel)
+    public void run()
+}
+
+class ClientBulletTask{
+
+    private DoubleCreatureLabel creatureLabel
+    public ClientBulletTask(DoubleCreatureLabel creatureLabel)
+    public void run() 
+}
+
+class RoleBulletTask {
+    private RoleLabel roleLabel
+    public RoleBulletTask(RoleLabel roleLabel)
+    public void run()
+}
+
+class RoleAttackTask {
+
+    private RoleLabel roleLabel
+    public RoleAttackTask(RoleLabel roleLabel)
+    public void run() 
+}
+
+class RoleTask {
+    private RoleLabel rolelabel
+    public RoleTask(RoleLabel rolelabel)
+    public void run()
+}
+
+
+CreatureTask --|>TimerTask
+BulletTask --|>TimerTask
+CreatureBulletTask --|>TimerTask
+RoleTask --|>TimerTask
+RoleAttackTask --|>TimerTask
+RoleBulletTask --|>TimerTask
+ClientBulletTask --|>TimerTask
+CreatureAttackTask --|>TimerTask
+@enduml

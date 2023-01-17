@@ -1,0 +1,6 @@
+wolf left (0,5)
+kunkun right (7,2)
+devil front (14,1)
+goust back (9,3)
+hydreigon front (5,4)
+blue_dragon back (8,5)

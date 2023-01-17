@@ -1,0 +1,122 @@
+@startuml
+
+class Thread{
+
+}
+
+class Exception{
+
+}
+
+class JPanel{
+
+}
+
+interface KeyListener{
+    public void keyTyped(KeyEvent e)
+    public void keyPressed(KeyEvent e) 
+    public void keyReleased(KeyEvent e) 
+}
+
+
+class CreatureThread{
+    private CreatureLabel CreatureLabel
+    public CreatureThread(CreatureLabel creatureLabel)
+    public void run()
+}
+
+
+class TestKeyListener {
+    public void keyTyped(KeyEvent e)
+    public void keyPressed(KeyEvent e) 
+    public void keyReleased(KeyEvent e)
+}
+
+
+class ClientListener{
+    public void keyTyped(KeyEvent e)
+    public void keyPressed(KeyEvent e) 
+    public void keyReleased(KeyEvent e)
+}
+
+class RoleTask {
+    private RoleLabel rolelabel
+    public RoleTask(RoleLabel rolelabel)
+    public void run()
+}
+
+
+class RoleMoveCommandStack {
+    private Stack<Character> stack 
+    boolean isEmpty()
+    void pop()
+    void push(char w)
+    Character getTop()
+}
+
+class StackException {
+    final private String message
+    public StackException()
+    public String getMessage()
+}
+
+class RoleClientBulletTask{
+    private DoubleRoleLabel roleLabel
+    public RoleClientBulletTask(DoubleRoleLabel roleLabel)
+    public void run() 
+}
+
+
+class RoleListener{
+    public void keyTyped(KeyEvent e)
+    public void keyPressed(KeyEvent e) 
+    public void keyReleased(KeyEvent e)
+}
+
+class PictureLabel{
+    private String filepath
+    private int x, y, width, height
+    private BufferedImage bf_img
+    public PictureLabel(String filepath, int x, int y, int width, int height)
+    protected void paintComponent(Graphics g)
+}
+
+interface ActionListener{
+
+}
+
+class BackListener {
+    public void actionPerformed(ActionEvent e) 
+}
+
+class ResumeListener {
+    public void actionPerformed(ActionEvent e)
+}
+
+
+class SelectListener {
+    public void actionPerformed(ActionEvent e) 
+}
+
+class StartListener {
+    public void actionPerformed(ActionEvent e) 
+}
+
+class ResumeListener {
+    public void actionPerformed(ActionEvent e)
+}
+
+
+
+CreatureThread --|>Thread
+TestKeyListener --|>KeyListener
+ClientListener --|>KeyListener
+StackException --|>Exception
+RoleListener --|>KeyListener
+PictureLabel --|>JPanel
+ResumeListener --|>ActionListener
+BackListener --|>ActionListener
+SelectListener --|>ActionListener
+StartListener --|>ActionListener
+ResumeListener --|>ActionListener
+@enduml

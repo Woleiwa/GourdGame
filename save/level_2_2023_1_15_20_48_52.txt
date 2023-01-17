@@ -1,0 +1,27 @@
+Monster:
+wolf right 100 3 5 165 400 false
+kunkun left 50 7 2 588 160 false
+devil front 120 14 3 1120 212 false
+goust back 120 9 1 720 108 false
+hydreigon front 50 5 6 400 452 false
+blue_dragon back 50 8 3 640 268 false
+Role:
+soldier right 280 100 96
+Bullet:
+soldier front 20 30 364
+soldier right 20 300 94
+soldier front 20 30 338
+soldier right 20 250 118
+soldier front 20 46 296
+soldier right 20 216 126
+soldier back 20 70 6
+soldier front 20 70 246
+soldier right 20 190 126
+soldier back 20 98 56
+soldier front 20 98 196
+soldier left 20 28 126
+soldier right 20 168 126
+soldier back 20 122 106
+soldier front 20 122 146
+soldier left 20 102 126
+soldier right 20 142 126

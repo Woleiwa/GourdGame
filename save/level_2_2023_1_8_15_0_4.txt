@@ -1,0 +1,28 @@
+Monster:
+wolf right 100 3 5 165 400 false
+kunkun left 50 7 2 588 160 false
+devil front 120 14 3 1120 212 false
+goust back 120 9 1 720 108 false
+hydreigon front 50 5 6 400 452 false
+blue_dragon back 50 8 3 640 268 false
+Role:
+elf right 100 180 132
+Bullet:
+elf front 15 110 394
+elf right 15 370 134
+elf front 15 110 368
+elf back 15 130 2
+elf front 15 130 322
+elf right 15 290 162
+elf back 15 154 52
+elf front 15 154 272
+elf left 15 44 162
+elf right 15 264 162
+elf back 15 178 102
+elf front 15 178 222
+elf left 15 118 162
+elf right 15 238 162
+elf back 15 206 142
+elf front 15 206 172
+elf left 15 196 162
+elf right 15 216 162

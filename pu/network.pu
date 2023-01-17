@@ -1,0 +1,61 @@
+@startuml
+class Thread{
+
+}
+
+class Client {
+    private String role
+    private int index
+    private int level
+    private Socket socket
+    private ClientFrame clientFrame
+    public Client(String role, int level)
+    public void constructConnect() throws IOException
+    public void clientSendCommand(String command) throws IOException
+    public ClientFrame getClientFrame()
+}
+
+class Server {
+    private ServerSocket serverSocket 
+    private ServerFrame serverFrame 
+    private int level
+    private String role1
+    private String role2
+    private Socket socket1
+    private Socket socket2
+    private CommandThread thread1
+    private CommandThread thread2
+    public Server()
+    public void constructConnect() throws IOException
+    public void ServerRun() throws IOException 
+ 
+}
+
+class ClientThread{
+    private Socket socket
+    private ClientFrame clientFrame
+    public ClientThread(Socket socket, ClientFrame clientFrame)
+    public void run()
+}
+
+class CommandThread{
+    private Socket socket
+    private ServerFrame ServerFrame
+    private int index
+    public CommandThread(Socket socket, ServerFrame ServerFrame, int index)
+    public void run()
+}
+
+class UpdateThread{
+    private Socket socket
+    private ServerFrame ServerFrame
+    int index
+
+    public UpdateThread(Socket socket, ServerFrame ServerFrame, int index)
+    public void run()
+}
+
+ClientThread--|>Thread
+CommandThread --|>Thread
+UpdateThread --|>Thread
+@enduml
