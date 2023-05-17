@@ -431,30 +431,10 @@ public class GameFrame extends JFrame {
                 if(contents[i].startsWith("Role")){
                     break;
                 }
-                String[] elements = contents[i].split(" ");
-                int index_x = Integer.valueOf(elements[3]);
-                int index_y = Integer.valueOf(elements[4]);
-                int cur_x = Integer.valueOf(elements[5]);
-                int cur_y = Integer.valueOf(elements[6]);
-                int hp = Integer.valueOf(elements[2]);
-                CreatureLabel creatureLabel = new CreatureLabel(elements[0],index_x,index_y,80,80,this.world,elements[1]);
-                creatureLabel.setBounds(cur_x, cur_y,80,80);
-                creatureLabel.setCur_x(cur_x);
-                creatureLabel.setCur_y(cur_y);
-                creatureLabel.getCreature().setHp(hp);
-                CreatureThread creatureThread = new CreatureThread(creatureLabel);
-                creatureLabel.setThread(creatureThread);
+                CreatureLabel creatureLabel = CreatureLabelFactory.createLoadedCreatureFactory(contents[i],world);
                 creatureLabel.setGameFrame(this);
-                if(elements[7].startsWith("false")){
-                    creatureLabel.setDetected(false);
-                }
-                else{
-                    creatureLabel.setDetected(true);
-                }
-                HpBar hpbar = new HpBar(cur_x, cur_y,10,80,Color.red,creatureLabel.getCreature());
-                this.jLayeredPane.add(hpbar, JLayeredPane.POPUP_LAYER);
+                this.jLayeredPane.add(creatureLabel.getHpBar(), JLayeredPane.POPUP_LAYER);
                 this.jLayeredPane.add(creatureLabel,JLayeredPane.POPUP_LAYER);
-                creatureLabel.setHpBar(hpbar);
                 this.creatureLabels.add(creatureLabel);
                 this.monster_num++;
             }
