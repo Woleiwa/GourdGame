@@ -1,4 +1,4 @@
-import Gui.StartFrame;
+import Gui.Frame.StartFrame;
 
 public class Main {
     public static void main(String args[]){

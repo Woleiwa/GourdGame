@@ -1,8 +1,8 @@
 package Gui.Factory;
 
 import Being.World;
-import Gui.BulletLabel;
-import Gui.DoubleBulletLabel;
+import Gui.Label.BulletLabel;
+import Gui.Label.DoubleBulletLabel;
 
 public class BulletLabelFactory {
     public static BulletLabel createBulletLabel(boolean type, String name, String direction, int x, int y, World world, int atk, boolean launcher){

@@ -1,7 +1,6 @@
 package Network;
 
-import Gui.ClientFrame;
-import Gui.DoubleGameFrame;
+import Gui.Frame.ClientFrame;
 
 import java.io.*;
 import java.net.Socket;

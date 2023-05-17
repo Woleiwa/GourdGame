@@ -1,5 +1,7 @@
 package Gui;
 
+import Gui.Label.CreatureLabel;
+
 public class CreatureThread extends Thread{
     private CreatureLabel creatureLabel;
 

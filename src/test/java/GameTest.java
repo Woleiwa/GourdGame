@@ -1,11 +1,10 @@
 import Being.Creature;
 import Being.Role;
-import Gui.*;
 
+import Gui.Frame.*;
 import Network.Client;
 import Network.Server;
 import org.junit.Test;
-import org.junit.experimental.theories.Theories;
 
 import java.io.File;
 import java.io.IOException;

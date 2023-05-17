@@ -54,9 +54,9 @@ class RoleMoveCommandStack {
     Character getTop()
 }
 
-class StackException {
+class Gui.StackException {
     final private String message
-    public StackException()
+    public Gui.StackException()
     public String getMessage()
 }
 
@@ -111,7 +111,7 @@ class ResumeListener {
 CreatureThread --|>Thread
 TestKeyListener --|>KeyListener
 ClientListener --|>KeyListener
-StackException --|>Exception
+Gui.StackException --|>Exception
 RoleListener --|>KeyListener
 PictureLabel --|>JPanel
 ResumeListener --|>ActionListener

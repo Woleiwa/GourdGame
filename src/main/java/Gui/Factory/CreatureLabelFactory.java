@@ -2,10 +2,10 @@ package Gui.Factory;
 
 import Being.Tile;
 import Being.World;
-import Gui.CreatureLabel;
+import Gui.Label.CreatureLabel;
 import Gui.CreatureThread;
-import Gui.DoubleCreatureLabel;
-import Gui.HpBar;
+import Gui.Label.DoubleCreatureLabel;
+import Gui.Label.HpBar;
 
 import java.awt.*;
 
