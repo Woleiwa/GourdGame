@@ -4,6 +4,7 @@ import Algorithm.Bfs;
 import Being.Role;
 import Being.Tile;
 import Being.World;
+import Gui.Factory.BulletLabelFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -264,33 +265,12 @@ public class DoubleCreatureLabel extends CreatureLabel{
         if(this.creature.isDead() || this.stop){
             return;
         }
-        DoubleBulletLabel bulletLabel = new DoubleBulletLabel(this.name, "front", cur_x + 30, cur_y + 30, 20, 20, 10);
-        this.doubleGameFrame.addBullet(bulletLabel);
-        bulletLabel.setWorld(this.creature.getWorld());
-        bulletLabel.setLauncher(false);
-        bulletLabel.setAtk(this.creature.getAtk());
-        bulletLabel.launch();
-
-        bulletLabel = new DoubleBulletLabel(this.name, "right", cur_x + 30, cur_y + 30, 20, 20, 10);
-        this.doubleGameFrame.addBullet(bulletLabel);
-        bulletLabel.setWorld(this.creature.getWorld());
-        bulletLabel.setLauncher(false);
-        bulletLabel.setAtk(this.creature.getAtk());
-        bulletLabel.launch();
-
-        bulletLabel = new DoubleBulletLabel(this.name, "left", cur_x + 30, cur_y + 30, 20, 20, 10);
-        this.doubleGameFrame.addBullet(bulletLabel);
-        bulletLabel.setWorld(this.creature.getWorld());
-        bulletLabel.setLauncher(false);
-        bulletLabel.setAtk(this.creature.getAtk());
-        bulletLabel.launch();
-
-        bulletLabel = new DoubleBulletLabel(this.name, "back", cur_x + 30, cur_y + 30, 20, 20, 10);
-        this.doubleGameFrame.addBullet(bulletLabel);
-        bulletLabel.setWorld(this.creature.getWorld());
-        bulletLabel.setLauncher(false);
-        bulletLabel.setAtk(this.creature.getAtk());
-        bulletLabel.launch();
+        String[] directions = {"back","front","left","right"};
+        for(int i = 0; i < directions.length; i++){
+            DoubleBulletLabel bulletLabel = (DoubleBulletLabel) BulletLabelFactory.createBulletLabel(false,name,directions[i],cur_x,cur_y,this.creature.getWorld(), this.creature.getAtk(),false);
+            this.doubleGameFrame.addBullet(bulletLabel);
+            bulletLabel.launch();
+        }
     }
 
     public boolean isEmitDeath(int index){

@@ -1,10 +1,13 @@
 package Being;
+import Being.Factory.BeingFactory;
+
 import java.io.*;
+import java.util.Objects;
 
 public class World {
     private int level;
     private Tile[][] map = new Tile[15][10];
-
+    //利用工厂模式制造Being
     public World(int level) {
         this.level = level;
         String filename = "setting/" + Integer.toString(this.level) + ".txt";
@@ -13,8 +16,7 @@ public class World {
             for(int j = 0; j < 10; j++)
             {
                 Tile tile = new Tile(i, j);
-                Empty empty = new Empty(tile);
-                tile.setBeing(empty);
+                tile.setBeing(BeingFactory.createBeing("Empty",tile));
                 map[i][j] = tile;
             }
         }
@@ -35,6 +37,7 @@ public class World {
                 //System.out.println(tiles[i]);
                 Tile tile = new Tile(tiles[i]);
                 this.map[tile.getX()][tile.getY()] = tile;
+                tile.setBeing(BeingFactory.createBeing("Road",tile));
             }
             for(int i = 0; i < 15; i++)
             {
@@ -48,8 +51,7 @@ public class World {
                             if(map[i - 1][j].getBeing().getName() == "Road")
                             {
                                 //System.out.println(map[i - 1][j].getBeing().getName());
-                                Wall wall = new Wall(map[i][j]);
-                                map[i][j].setBeing(wall);
+                                map[i][j].setBeing(BeingFactory.createBeing("Wall",map[i][j]));
                                 continue;
                             }
                         }
@@ -58,8 +60,7 @@ public class World {
                             if(map[i][j - 1].getBeing().getName() == "Road")
                             {
                                 //System.out.println(map[i][j - 1].getBeing().getName());
-                                Wall wall = new Wall(map[i][j]);
-                                map[i][j].setBeing(wall);
+                                map[i][j].setBeing(BeingFactory.createBeing("Wall",map[i][j]));
                                 continue;
                             }
                         }
@@ -68,18 +69,16 @@ public class World {
                             if(map[i + 1][j].getBeing().getName() == "Road")
                             {
                                 //System.out.println(map[i + 1][j].getBeing().getName());
-                                Wall wall = new Wall(map[i][j]);
-                                map[i][j].setBeing(wall);
+                                map[i][j].setBeing(BeingFactory.createBeing("Wall",map[i][j]));
                                 continue;
                             }
                         }
                         if(j + 1 < 10)
                         {
-                            if(map[i][j + 1].getBeing().getName() == "Road")
+                            if(Objects.equals(map[i][j + 1].getBeing().getName(), "Road"))
                             {
                                 //System.out.println(map[i][j + 1].getBeing().getName());
-                                Wall wall = new Wall(map[i][j]);
-                                map[i][j].setBeing(wall);
+                                map[i][j].setBeing(BeingFactory.createBeing("Wall",map[i][j]));
                                 continue;
                             }
                         }
@@ -101,7 +100,7 @@ public class World {
         int[][] res = new int[15][10];
         for(int i = 0; i < 15; i++){
             for(int j = 0; j < 10; j++){
-                if(this.map[i][j].getBeing().getName() == "Road"){
+                if(Objects.equals(this.map[i][j].getBeing().getName(), "Road")){
                     res[i][j] = 0;
                 }
                 else {

@@ -2,6 +2,7 @@ package Gui;
 
 import Being.Tile;
 import Being.World;
+import Gui.Factory.CreatureLabelFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -100,7 +101,7 @@ public class DoubleGameFrame extends JFrame{
             int height = 800 / map[i].length;
             for(int j = 0; j < map[i].length; j++)
             {
-                if(map[i][j].getBeing().getName() != "Empty")
+                if(!map[i][j].getBeing().getName().equals("Empty"))
                 {
                     int x = i * width;
                     int y = j * height;
@@ -131,19 +132,11 @@ public class DoubleGameFrame extends JFrame{
             String[] lines = contents.split("\n");
             this.monster_num = lines.length;
             for(int i = 0; i < lines.length; i++) {
-                String[] elements = lines[i].split(" ");
-                String name = elements[0];
-                Tile tile = new Tile(elements[2]);
-                String direction = elements[1];
-                DoubleCreatureLabel creatureLabel = new DoubleCreatureLabel(name, tile.getX(), tile.getY(), 80, 80, world, direction);
+                DoubleCreatureLabel creatureLabel =  (DoubleCreatureLabel) CreatureLabelFactory.createCreatureFactory(false,lines[i],this.world);
                 this.creatureLabels.add(creatureLabel);
                 creatureLabel.setDoubleGameFrame(this);
-                CreatureThread creatureThread = new CreatureThread(creatureLabel);
-                creatureLabel.setThread(creatureThread);
-                HpBar hp = new HpBar(tile.getX() * 80, tile.getY() * 80,10,80,Color.red,creatureLabel.getCreature());
-                this.jLayeredPane.add(hp, JLayeredPane.POPUP_LAYER);
+                this.jLayeredPane.add(creatureLabel.getHpBar(), JLayeredPane.POPUP_LAYER);
                 this.jLayeredPane.add(creatureLabel, JLayeredPane.POPUP_LAYER);
-                creatureLabel.setHpBar(hp);
             }
 
         }catch (FileNotFoundException e) {

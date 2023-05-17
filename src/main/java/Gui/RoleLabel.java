@@ -1,8 +1,10 @@
 package Gui;
 
+import Being.Factory.CreatureFactory;
 import Being.Role;
 import Being.Tile;
 import Being.World;
+import Gui.Factory.BulletLabelFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,7 +33,7 @@ public class RoleLabel extends JLabel {
 
     public RoleLabel(String name, int x, int y, int w, int h, World world){
         this.name = name;
-        this.role = new Role(name);
+        this.role = (Role) CreatureFactory.createCreature(false,name);
         String filepath = "img/" + name +"/" + this.direction +"_" + Integer.toString(index) +".png";
         this.cur_x = x * w;
         this.cur_y = y * h;
@@ -222,33 +224,12 @@ public class RoleLabel extends JLabel {
         if(!launch || this.role.isDead() || this.stop){
             return;
         }
-        BulletLabel bulletLabel1 = new BulletLabel(this.name, "back", cur_x + 30, cur_y + 30, 20, 20, 10);
-        this.gameFrame.addBullet(bulletLabel1);
-        bulletLabel1.setWorld(this.role.getWorld());
-        bulletLabel1.setAtk(this.role.getAtk());
-        bulletLabel1.setLauncher(true);
-        bulletLabel1.launch();
-
-        BulletLabel bulletLabel2 = new BulletLabel(this.name, "front", cur_x + 30, cur_y + 30, 20, 20, 10);
-        this.gameFrame.addBullet(bulletLabel2);
-        bulletLabel2.setWorld(this.role.getWorld());
-        bulletLabel2.setAtk(this.role.getAtk());
-        bulletLabel2.setLauncher(true);
-        bulletLabel2.launch();
-
-        BulletLabel bulletLabel3 = new BulletLabel(this.name, "left", cur_x + 30, cur_y + 30, 20, 20, 10);
-        this.gameFrame.addBullet(bulletLabel3);
-        bulletLabel3.setWorld(this.role.getWorld());
-        bulletLabel3.setAtk(this.role.getAtk());
-        bulletLabel3.setLauncher(true);
-        bulletLabel3.launch();
-
-        BulletLabel bulletLabel4 = new BulletLabel(this.name, "right", cur_x + 30, cur_y + 30, 20, 20, 10);
-        this.gameFrame.addBullet(bulletLabel4);
-        bulletLabel4.setWorld(this.role.getWorld());
-        bulletLabel4.setAtk(this.role.getAtk());
-        bulletLabel4.setLauncher(true);
-        bulletLabel4.launch();
+        String[] directions = {"back","front","left","right"};
+        for(int i = 0; i < directions.length; i++){
+            BulletLabel bulletLabel =  BulletLabelFactory.createBulletLabel(true,name,directions[i],cur_x,cur_y,this.role.getWorld(), this.role.getAtk(),true);
+            this.gameFrame.addBullet(bulletLabel);
+            bulletLabel.launch();
+        }
     }
 
     public void setGameFrame(GameFrame gameFrame){

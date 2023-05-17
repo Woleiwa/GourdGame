@@ -1,5 +1,7 @@
 package Being;
 
+import Being.Factory.BeingFactory;
+
 public class Tile {
     private int x, y;
     private Being being;
@@ -24,7 +26,6 @@ public class Tile {
         //System.out.println(str_y);
         this.x = Integer.parseInt(str_x);
         this.y = Integer.parseInt(str_y);
-        this.being = new Road(this);
     }
 
     public Being getBeing() {

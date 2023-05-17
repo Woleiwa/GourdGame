@@ -6,6 +6,8 @@ import java.awt.*;
 import java.util.Timer;
 import java.util.TimerTask;
 import Algorithm.*;
+import Being.Factory.CreatureFactory;
+import Gui.Factory.BulletLabelFactory;
 
 public class CreatureLabel extends JLabel {
     protected String name;
@@ -27,7 +29,7 @@ public class CreatureLabel extends JLabel {
 
     public CreatureLabel(String name, int x, int y, int w, int h, World world, String direction) {
         this.name = name;
-        this.creature = new Creature(name);
+        this.creature = CreatureFactory.createCreature(true,name);
         if(direction.startsWith("f"))
         {
             this.direction = "front";
@@ -246,7 +248,10 @@ public class CreatureLabel extends JLabel {
 
     public void setHpBar(HpBar hpBar){
         this.hpBar = hpBar;
+    }
 
+    public HpBar getHpBar(){
+        return this.hpBar;
     }
 
     public Creature getCreature(){
@@ -257,33 +262,12 @@ public class CreatureLabel extends JLabel {
         if(this.creature.isDead() || this.stop){
             return;
         }
-        BulletLabel bulletLabel = new BulletLabel(this.name, "front", cur_x + 30, cur_y + 30, 20, 20, 10);
-        this.gameFrame.addBullet(bulletLabel);
-        bulletLabel.setWorld(this.creature.getWorld());
-        bulletLabel.setLauncher(false);
-        bulletLabel.setAtk(this.creature.getAtk());
-        bulletLabel.launch();
-
-        bulletLabel = new BulletLabel(this.name, "right", cur_x + 30, cur_y + 30, 20, 20, 10);
-        this.gameFrame.addBullet(bulletLabel);
-        bulletLabel.setWorld(this.creature.getWorld());
-        bulletLabel.setLauncher(false);
-        bulletLabel.setAtk(this.creature.getAtk());
-        bulletLabel.launch();
-
-        bulletLabel = new BulletLabel(this.name, "left", cur_x + 30, cur_y + 30, 20, 20, 10);
-        this.gameFrame.addBullet(bulletLabel);
-        bulletLabel.setWorld(this.creature.getWorld());
-        bulletLabel.setLauncher(false);
-        bulletLabel.setAtk(this.creature.getAtk());
-        bulletLabel.launch();
-
-        bulletLabel = new BulletLabel(this.name, "back", cur_x + 30, cur_y + 30, 20, 20, 10);
-        this.gameFrame.addBullet(bulletLabel);
-        bulletLabel.setWorld(this.creature.getWorld());
-        bulletLabel.setLauncher(false);
-        bulletLabel.setAtk(this.creature.getAtk());
-        bulletLabel.launch();
+        String[] directions = {"back","front","left","right"};
+        for(int i = 0; i < directions.length; i++){
+            BulletLabel bulletLabel = BulletLabelFactory.createBulletLabel(true,name,directions[i],cur_x,cur_y,this.creature.getWorld(), this.creature.getAtk(),false);
+            this.gameFrame.addBullet(bulletLabel);
+            bulletLabel.launch();
+        }
     }
 
     public void setGameFrame(GameFrame gameFrame){

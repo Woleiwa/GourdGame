@@ -1,6 +1,7 @@
 package Gui;
 
 import Being.World;
+import Gui.Factory.BulletLabelFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,37 +31,13 @@ public class DoubleRoleLabel extends RoleLabel{
         if(!launch || this.role.isDead() || this.stop){
             return;
         }
-        DoubleBulletLabel bulletLabel1 = new DoubleBulletLabel(this.name, "back", cur_x + 30, cur_y + 30, 20, 20, 10);
-        bulletLabel1.setAttacker(this.roleIndex);
-        this.doubleGameFrame.addBullet(bulletLabel1);
-        bulletLabel1.setWorld(this.role.getWorld());
-        bulletLabel1.setAtk(this.role.getAtk());
-        bulletLabel1.setLauncher(true);
-        bulletLabel1.launch();
-
-        DoubleBulletLabel bulletLabel2 = new DoubleBulletLabel(this.name, "front", cur_x + 30, cur_y + 30, 20, 20, 10);
-        bulletLabel2.setAttacker(this.roleIndex);
-        this.doubleGameFrame.addBullet(bulletLabel2);
-        bulletLabel2.setWorld(this.role.getWorld());
-        bulletLabel2.setAtk(this.role.getAtk());
-        bulletLabel2.setLauncher(true);
-        bulletLabel2.launch();
-
-        DoubleBulletLabel bulletLabel3 = new DoubleBulletLabel(this.name, "left", cur_x + 30, cur_y + 30, 20, 20, 10);
-        bulletLabel3.setAttacker(this.roleIndex);
-        this.doubleGameFrame.addBullet(bulletLabel3);
-        bulletLabel3.setWorld(this.role.getWorld());
-        bulletLabel3.setAtk(this.role.getAtk());
-        bulletLabel3.setLauncher(true);
-        bulletLabel3.launch();
-
-        DoubleBulletLabel bulletLabel4 = new DoubleBulletLabel(this.name, "right", cur_x + 30, cur_y + 30, 20, 20, 10);
-        bulletLabel4.setAttacker(this.roleIndex);
-        this.doubleGameFrame.addBullet(bulletLabel4);
-        bulletLabel4.setWorld(this.role.getWorld());
-        bulletLabel4.setAtk(this.role.getAtk());
-        bulletLabel4.setLauncher(true);
-        bulletLabel4.launch();
+        String[] directions = {"back","front","left","right"};
+        for(int i = 0; i < directions.length; i++){
+            DoubleBulletLabel bulletLabel = (DoubleBulletLabel) BulletLabelFactory.createBulletLabel(false,name,directions[i],cur_x,cur_y,this.role.getWorld(), this.role.getAtk(),true);
+            this.doubleGameFrame.addBullet(bulletLabel);
+            bulletLabel.setAttacker(this.roleIndex);
+            bulletLabel.launch();
+        }
     }
 
     @Override

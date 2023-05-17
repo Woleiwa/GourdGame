@@ -2,6 +2,7 @@ package Gui;
 
 import javax.swing.*;
 import Being.*;
+import Gui.Factory.CreatureLabelFactory;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -167,19 +168,11 @@ public class GameFrame extends JFrame {
             String[] lines = contents.split("\n");
             this.monster_num = lines.length;
             for(int i = 0; i < lines.length; i++) {
-                String[] elements = lines[i].split(" ");
-                String name = elements[0];
-                Tile tile = new Tile(elements[2]);
-                String direction = elements[1];
-                CreatureLabel creatureLabel = new CreatureLabel(name, tile.getX(), tile.getY(), 80, 80, world, direction);
+                CreatureLabel creatureLabel =  CreatureLabelFactory.createCreatureFactory(true,lines[i],this.world);
                 this.creatureLabels.add(creatureLabel);
-                CreatureThread creatureThread = new CreatureThread(creatureLabel);
-                creatureLabel.setThread(creatureThread);
                 creatureLabel.setGameFrame(this);
-                HpBar hp = new HpBar(tile.getX() * 80, tile.getY() * 80,10,80,Color.red,creatureLabel.getCreature());
-                this.jLayeredPane.add(hp, JLayeredPane.POPUP_LAYER);
+                this.jLayeredPane.add(creatureLabel.getHpBar(), JLayeredPane.POPUP_LAYER);
                 this.jLayeredPane.add(creatureLabel, JLayeredPane.POPUP_LAYER);
-                creatureLabel.setHpBar(hp);
             }
 
             for(int i = 0; i < this.creatureLabels.size(); i++) {
