@@ -31,7 +31,8 @@ public class Role extends Creature{
             String str_speed = settings[2].substring(0, settings[2].length() - 1);
             this.setSpeed(Integer.parseInt(str_speed));
             this.setAtk_mode(true);
-            if(settings[3].startsWith("f"))
+            System.out.println(settings[3]);
+            if(settings[3].equals("false"))
             {
                 this.setAtk_mode(false);
             }

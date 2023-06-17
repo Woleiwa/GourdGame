@@ -13,7 +13,7 @@ class BulletLabel{
     protected World world
     protected boolean launcher
     protected int atk
-    private GameFrame gameFrame
+    private GameFrame singleGameFrame
     protected boolean able
     public BulletLabel(String name, String direction, int x, int y, int width, int height, int speed)
     public void move() 
@@ -24,7 +24,7 @@ class BulletLabel{
     public boolean getLauncher()
     public void setAtk(int atk)
     public int getAtk()
-    public void setGameFrame(GameFrame gameFrame)
+    public void setGameFrame(GameFrame singleGameFrame)
     public int get_x()
     public int get_y()
     public int get_width()
@@ -49,7 +49,7 @@ class CreatureLabel {
     protected HpBar hpBar
     protected Boolean detected 
     protected Boolean stop 
-    protected GameFrame gameFrame
+    protected GameFrame singleGameFrame
     private boolean client
     public CreatureLabel(String name, int x, int y, int w, int h, World world, String direction)
     public void move()
@@ -61,7 +61,7 @@ class CreatureLabel {
     public void setHpBar(HpBar hpBar)
     public Creature getCreature()
     public void launchBullet()
-    public void setGameFrame(GameFrame gameFrame)
+    public void setGameFrame(GameFrame singleGameFrame)
     public void StartLaunch()
     public String getName()
     public void StartAtk()
@@ -127,7 +127,7 @@ class RoleLabel {
     protected Timer timer;
     protected boolean movable 
     protected HpBar hpBar
-    private GameFrame gameFrame
+    private GameFrame singleGameFrame
     protected Timer bulletTimer
     protected boolean launch
     protected RoleMoveCommandStack moveStack 
@@ -144,7 +144,7 @@ class RoleLabel {
     public void startMove() 
     public void endMove(char w) 
     public void launchBullet()
-    public void setGameFrame(GameFrame gameFrame)
+    public void setGameFrame(GameFrame singleGameFrame)
     public void startAtk()
     public void setLaunch(boolean launch)
     public int get_x()

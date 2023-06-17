@@ -37,7 +37,7 @@ public class GameTest {
 
     @Test
     public void GameTestWithLevel(){
-        GameFrame gf = new GameFrame("elf",3);
+        SingleGameFrame gf = new SingleGameFrame("elf",3);
         try {
             Thread.sleep(1000);
             assertEquals(3,gf.getLevel());
@@ -49,7 +49,7 @@ public class GameTest {
 
     @Test
     public void StartFrameTest(){
-        StartFrame sf = new StartFrame();
+        StartFrame sf = StartFrame.getInstance();
         sf.setVisible(true);
         try {
             Thread.sleep(1000);
@@ -80,7 +80,7 @@ public class GameTest {
 
     @Test
     public void GameFrameActionTest(){
-        GameFrame gf = new GameFrame("soldier",2);
+        SingleGameFrame gf = new SingleGameFrame("soldier",2);
         gf.setVisible(true);
         try {
             Thread.sleep(100);
@@ -114,7 +114,7 @@ public class GameTest {
 
     @Test
     public void LoadTest(){
-        GameFrame gf = new GameFrame("save/level_2_2023_1_7_22_17_28.txt");
+        SingleGameFrame gf = new SingleGameFrame("save/level_2_2023_1_7_22_17_28.txt");
         System.out.println(gf.getContent());
         String[] contents = gf.getContents();
         for(int i = 0; i < contents.length; i++){
@@ -173,7 +173,7 @@ public class GameTest {
 
     @Test
     public void ConnectionTest() throws IOException, InterruptedException {
-        Server testServer = new Server();
+        Server testServer = Server.getInstance();
         TestServerThread thread = new TestServerThread(testServer);
         thread.start();
 

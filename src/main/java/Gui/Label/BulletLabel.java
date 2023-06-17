@@ -2,7 +2,8 @@ package Gui.Label;
 
 import Being.Tile;
 import Being.World;
-import Gui.Frame.GameFrame;
+import Gui.Frame.SingleGameFrame;
+import Observer.Observer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,9 +19,10 @@ public class BulletLabel extends JLabel{
     protected World world;
     protected boolean launcher;
     protected int atk = 0;
-    private GameFrame gameFrame;
+    private SingleGameFrame singleGameFrame;
     protected boolean able = true;
 
+    protected Observer observer;
     public BulletLabel(String name, String direction, int x, int y, int width, int height, int speed){
         this.name = name;
         this.direction = direction;
@@ -36,8 +38,11 @@ public class BulletLabel extends JLabel{
         this.setOpaque(false);
     }
 
+    public void setObserver(Observer observer){
+        this.observer = observer;
+    }
     public void move() {
-        if(this.gameFrame.stop || this.able == false){
+        if(this.singleGameFrame.isStop() || this.able == false){
             //System.out.println("I can't move!");
             return;
         }
@@ -53,33 +58,19 @@ public class BulletLabel extends JLabel{
         else if(this.direction.startsWith("right")) {
             x += this.speed;
         }
-        if(y < 0 || y + height > 800 || x < 0 || x + width > 1200){
-             this.setVisible(false);
-             this.able = false;
-             this.timer.cancel();
+        if(y < 0 || y + height > 800 || x < 0 || x + width > 1200 || this.blockedByWall()){
+             disappear();
              return;
         }
-        else if(this.blockedByWall()) {
-            this.setVisible(false);
-            this.able = false;
-            this.timer.cancel();
-            return;
-        }
-        else if(this.launcher && this.gameFrame.bulletHitCreature(this)){
-            this.setVisible(false);
-            this.able = false;
-            this.timer.cancel();
-            return;
-        }
-        else if(!this.launcher && this.gameFrame.getRoleLabel().hitByBullet(this)){
-            this.setVisible(false);
-            this.able = false;
-            this.timer.cancel();
-            return;
-        }
         this.setBounds(this.x, this.y, width, height);
+        this.observer.bulletNotify(this);
     }
 
+    public void disappear(){
+        this.setVisible(false);
+        this.able = false;
+        this.timer.cancel();
+    }
     public void launch(){
         this.timer = new Timer();
         TimerTask bulletTask = new BulletTask(this);
@@ -129,8 +120,8 @@ public class BulletLabel extends JLabel{
         return this.atk;
     }
 
-    public void setGameFrame(GameFrame gameFrame){
-        this.gameFrame = gameFrame;
+    public void setGameFrame(SingleGameFrame singleGameFrame){
+        this.singleGameFrame = singleGameFrame;
     }
 
     public int get_x(){

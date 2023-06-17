@@ -9,7 +9,19 @@ import java.awt.event.ActionListener;
 
 
 public class StartFrame extends JFrame {
-    public StartFrame() {
+    static volatile private StartFrame instance = null;
+
+    static public StartFrame getInstance(){
+        if(instance == null){
+            synchronized (StartFrame.class){
+                if(instance == null){
+                    instance = new StartFrame();
+                }
+            }
+        }
+        return instance;
+    }
+    private StartFrame() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(800,600);
         this.setTitle("Start");
@@ -50,14 +62,14 @@ public class StartFrame extends JFrame {
     }
 
     public void Start() {
-        SelectFrame sf = new SelectFrame();
+        SelectFrame sf = SelectFrame.getInstance();
         sf.setVisible(true);
     }
 
     public void Resume(){
         ResumeFrame rf = null;
         try {
-            rf = new ResumeFrame();
+            rf = ResumeFrame.getInstance();
         } catch (Exception e) {
             e.printStackTrace();
         }

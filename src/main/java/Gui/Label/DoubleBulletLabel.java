@@ -27,7 +27,7 @@ public class DoubleBulletLabel extends BulletLabel{
 
     @Override
     public void move() {
-        if(this.doubleGameFrame.stop || this.able == false){
+        if(this.doubleGameFrame.isStop() || this.able == false){
             return;
         }
         if(this.direction.startsWith("front")){
@@ -42,37 +42,12 @@ public class DoubleBulletLabel extends BulletLabel{
         else if(this.direction.startsWith("right")) {
             x += this.speed;
         }
-        if(y < 0 || y + height > 800 || x < 0 || x + width > 1200){
-            this.setVisible(false);
-            this.able = false;
-            this.timer.cancel();
-            return;
-        }
-        else if(this.blockedByWall()) {
-            this.setVisible(false);
-            this.able = false;
-            this.timer.cancel();
-            return;
-        }
-        else if(this.launcher && this.doubleGameFrame.bulletHitCreature(this)){
-            this.setVisible(false);
-            this.able = false;
-            this.timer.cancel();
-            return;
-        }
-        else if(!this.launcher && this.doubleGameFrame.getRoleLabel(0).hitByBullet(this)){
-            this.setVisible(false);
-            this.able = false;
-            this.timer.cancel();
-            return;
-        }
-        else if(!this.launcher && this.doubleGameFrame.getRoleLabel(1).hitByBullet(this)){
-            this.setVisible(false);
-            this.able = false;
-            this.timer.cancel();
+        if(y < 0 || y + height > 800 || x < 0 || x + width > 1200 || this.blockedByWall()){
+            disappear();
             return;
         }
         this.setBounds(this.x, this.y, width, height);
+        this.observer.bulletNotify(this);
     }
 
     public Boolean emit(int index){

@@ -1,6 +1,6 @@
 package Gui.Facade;
 
-import Gui.Frame.GameFrame;
+import Gui.Frame.SingleGameFrame;
 import Network.Client;
 
 import java.io.IOException;
@@ -8,10 +8,10 @@ import java.io.IOException;
 public class GameFacade {
     public static void GameStart(int mod,int level, String role){
         if(mod == 0){
-            GameFrame gameFrame = new GameFrame(role,level);
-            gameFrame.setVisible(true);
+            SingleGameFrame singleGameFrame = new SingleGameFrame(role,level);
+            singleGameFrame.setVisible(true);
         }
-        else{
+        else if (mod == 1){
             Client client = new Client(role, level);
             try {
                 client.constructConnect();
@@ -19,5 +19,10 @@ public class GameFacade {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static void GameResume(String filepath){
+        SingleGameFrame gameframe = new SingleGameFrame(filepath);
+        gameframe.setVisible(true);
     }
 }

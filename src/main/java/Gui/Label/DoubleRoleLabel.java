@@ -47,8 +47,7 @@ public class DoubleRoleLabel extends RoleLabel{
             return;
         }
         if(this.launch){
-            this.doubleGameFrame.roleAtk(this.roleIndex);
-            //System.out.println("I attacked!");
+            this.observer.roleNotify(this);
         }
     }
 
@@ -60,7 +59,7 @@ public class DoubleRoleLabel extends RoleLabel{
     synchronized public void updateHp(){
         if(this.role.isDead() && ! this.killed){
             this.killed = true;
-            this.doubleGameFrame.killRole();
+            this.observer.roleDied(this);
             this.setVisible(false);
         }
         this.hpBar.upDateHpBar();

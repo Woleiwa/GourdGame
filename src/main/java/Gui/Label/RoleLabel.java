@@ -5,8 +5,9 @@ import Being.Role;
 import Being.Tile;
 import Being.World;
 import Gui.Factory.BulletLabelFactory;
-import Gui.Frame.GameFrame;
+import Gui.Frame.SingleGameFrame;
 import Gui.StackException;
+import Observer.Observer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,13 +27,13 @@ public class RoleLabel extends JLabel {
     protected Timer timer;
     protected boolean movable = false;
     protected HpBar hpBar;
-    private GameFrame gameFrame;
+    private SingleGameFrame singleGameFrame;
     protected Timer bulletTimer;
     protected boolean launch = false;
     protected RoleMoveCommandStack moveStack = new RoleMoveCommandStack();
     protected RoleMoveCommandStack releaseStack = new RoleMoveCommandStack();
     protected boolean stop = false;
-
+    protected Observer observer;
     public RoleLabel(String name, int x, int y, int w, int h, World world){
         this.name = name;
         this.role = (Role) CreatureFactory.createCreature(false,name);
@@ -51,6 +52,10 @@ public class RoleLabel extends JLabel {
         this.timer = new Timer();
         TimerTask task = new RoleTask(this);
         timer.schedule(task,10,80);
+    }
+
+    public void setObserver(Observer observer) {
+        this.observer = observer;
     }
 
     public Role getRole(){
@@ -229,16 +234,17 @@ public class RoleLabel extends JLabel {
         String[] directions = {"back","front","left","right"};
         for(int i = 0; i < directions.length; i++){
             BulletLabel bulletLabel =  BulletLabelFactory.createBulletLabel(true,name,directions[i],cur_x,cur_y,this.role.getWorld(), this.role.getAtk(),true);
-            this.gameFrame.addBullet(bulletLabel);
+            this.singleGameFrame.addBullet(bulletLabel);
             bulletLabel.launch();
         }
     }
 
-    public void setGameFrame(GameFrame gameFrame){
-        this.gameFrame = gameFrame;
+    public void setGameFrame(SingleGameFrame singleGameFrame){
+        this.singleGameFrame = singleGameFrame;
     }
 
     public void startAtk(){
+        System.out.println(this.role.getAtkMode());
         if(this.role.getAtkMode())
         {
             this.bulletTimer = new Timer();
@@ -293,7 +299,7 @@ public class RoleLabel extends JLabel {
 
     public void updateHp(){
         if(this.role.isDead()){
-            this.gameFrame.fail();
+            this.observer.roleDied(this);
         }
         this.hpBar.upDateHpBar();
     }
@@ -303,7 +309,7 @@ public class RoleLabel extends JLabel {
             return;
         }
         if(this.launch){
-            this.gameFrame.roleAtk();
+            this.observer.roleNotify(this);
             System.out.println("I attacked!");
         }
     }

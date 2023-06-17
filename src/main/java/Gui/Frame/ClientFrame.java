@@ -18,10 +18,10 @@ public class ClientFrame extends DoubleGameFrame{
         this.index = index;
         this.addKeyListener(new ClientListener());
         this.getRoleLabel(index).getHpBar().setHpColor(Color.cyan);
-        for(int i = 0; i < this.creatureLabels.size(); i++){
-            creatureLabels.get(i).setClient(true);
-            /*if(creatureLabels.get(i).getCreature().getAtkMode()){
-                creatureLabels.get(i).startClientLaunch();
+        for(int i = 0; i < this.doubleCreatureLabels.size(); i++){
+            doubleCreatureLabels.get(i).setClient(true);
+            /*if(doubleCreatureLabels.get(i).getCreature().getAtkMode()){
+                doubleCreatureLabels.get(i).startClientLaunch();
             }*/
         }
         //roleLabels[0].startClientLaunch();
@@ -102,7 +102,7 @@ public class ClientFrame extends DoubleGameFrame{
             }
             else if(elements[0].equals("monster")){
                 int creature_index = Integer.valueOf(elements[1]);
-                this.creatureLabels.get(creature_index).update(elements[2],elements[3],elements[4],elements[5],elements[6],elements[7]);
+                this.doubleCreatureLabels.get(creature_index).update(elements[2],elements[3],elements[4],elements[5],elements[6],elements[7]);
             }
             else if(elements[0].equals("bullet")){
                 //System.out.println(informs[i]);
@@ -115,6 +115,7 @@ public class ClientFrame extends DoubleGameFrame{
                 }
                 bullet.setAttacker(0);
                 bullet.setDoubleGameFrame(this);
+                bullet.setObserver(this.observer);
                 bullet.setWorld(this.roleLabels[0].getRole().getWorld());
                 bullet.launch();
             }

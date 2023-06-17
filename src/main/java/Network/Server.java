@@ -20,7 +20,19 @@ public class Server {
     private CommandThread thread1;
     private CommandThread thread2;
 
-    public Server(){
+    static volatile private Server instance = null;
+    public static Server getInstance(){
+        if(instance == null)
+        {
+            synchronized (Server.class){
+                if(instance == null){
+                    instance = new Server();
+                }
+            }
+        }
+        return instance;
+    }
+    private Server(){
         try {
             serverSocket = new ServerSocket(8080);
         } catch (IOException e) {
@@ -182,6 +194,5 @@ class UpdateTask extends TimerTask{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

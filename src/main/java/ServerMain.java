@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class ServerMain {
     public static void main(String args[]){
-        Server server = new Server();
+        Server server = Server.getInstance();
         try {
             server.constructConnect();
         } catch (IOException e) {

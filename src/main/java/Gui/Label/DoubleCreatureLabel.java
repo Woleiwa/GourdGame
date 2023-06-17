@@ -233,31 +233,7 @@ public class DoubleCreatureLabel extends CreatureLabel{
         if(this.creature.isDead() || this.stop){
             return;
         }
-        for(int i = 0; i < 2; i++){
-            RoleLabel target = this.doubleGameFrame.getRoleLabel(i);
-            int t_x = target.get_x();
-            int t_y = target.get_y();
-            int x = cur_x / width;
-            int y = cur_y / width;
-            int dx = t_x - x;
-            int dy = t_y - y;
-            int jd = dx * dx + dy * dy;
-            if(jd <= 1){
-                Role role = target.getRole();
-                role.setHp(role.getHp() - creature.getAtk());
-                target.updateHp();
-            }
-        }
-    }
-
-    @Override
-    synchronized public void updateHpBar(){
-        this.hpBar.upDateHpBar();
-        if(this.creature.isDead()){
-            this.setVisible(false);
-            this.thread.interrupt();
-            this.doubleGameFrame.killMonster();
-        }
+       this.observer.creatureNotify(this);
     }
     
     @Override

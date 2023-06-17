@@ -10,6 +10,8 @@ import Being.Factory.CreatureFactory;
 import Gui.CreatureThread;
 import Gui.Factory.BulletLabelFactory;
 import Gui.Frame.GameFrame;
+import Gui.Frame.SingleGameFrame;
+import Observer.Observer;
 
 public class CreatureLabel extends JLabel {
     protected String name;
@@ -26,8 +28,10 @@ public class CreatureLabel extends JLabel {
     protected HpBar hpBar;
     protected Boolean detected = false;
     protected Boolean stop = false;
-    protected GameFrame gameFrame;
+    protected SingleGameFrame singleGameFrame;
     private boolean client = false;
+    protected Observer observer;
+    protected boolean killed = false;
 
     public CreatureLabel(String name, int x, int y, int w, int h, World world, String direction) {
         this.name = name;
@@ -62,6 +66,9 @@ public class CreatureLabel extends JLabel {
         creature.setCur_tile(world.getMap()[x][y]);
     }
 
+    public void setObserver(Observer observer){
+        this.observer = observer;
+    }
     public void move() {
         if(this.creature.isDead() || this.stop) {
             return;
@@ -106,7 +113,7 @@ public class CreatureLabel extends JLabel {
         }
         int speed = this.creature.getSpeed();
         if(this.detected){
-            RoleLabel target = this.gameFrame.getRoleLabel();
+            RoleLabel target = this.singleGameFrame.getRoleLabel();
             int t_x = target.get_x();
             int t_y = target.get_y();
             int x = this.creature.getCur_tile().getX();
@@ -147,7 +154,7 @@ public class CreatureLabel extends JLabel {
         }
         if(this.detected){
             int[][] map = this.creature.getWorld().mapToInt();
-            RoleLabel target = this.gameFrame.getRoleLabel();
+            RoleLabel target = this.singleGameFrame.getRoleLabel();
             int t_x = target.get_x();
             int t_y = target.get_y();
             Bfs bfs = new Bfs(map, this.cur_x/80,this.cur_y/80, t_x, t_y);
@@ -215,6 +222,9 @@ public class CreatureLabel extends JLabel {
         }
         return true;
     }
+    public int getCreatureAtk(){
+        return this.creature.getAtk();
+    }
 
     protected boolean accessible(int x, int y) {
         if( x < 0  || y < 0)
@@ -267,13 +277,13 @@ public class CreatureLabel extends JLabel {
         String[] directions = {"back","front","left","right"};
         for(int i = 0; i < directions.length; i++){
             BulletLabel bulletLabel = BulletLabelFactory.createBulletLabel(true,name,directions[i],cur_x,cur_y,this.creature.getWorld(), this.creature.getAtk(),false);
-            this.gameFrame.addBullet(bulletLabel);
+            this.singleGameFrame.addBullet(bulletLabel);
             bulletLabel.launch();
         }
     }
 
-    public void setGameFrame(GameFrame gameFrame){
-        this.gameFrame = gameFrame;
+    public void setGameFrame(SingleGameFrame singleGameFrame){
+        this.singleGameFrame = singleGameFrame;
     }
 
     public void StartLaunch(){
@@ -297,19 +307,7 @@ public class CreatureLabel extends JLabel {
         if(this.creature.isDead() || this.stop){
             return;
         }
-        RoleLabel target = this.gameFrame.getRoleLabel();
-        int t_x = target.get_x();
-        int t_y = target.get_y();
-        int x = cur_x / width;
-        int y = cur_y / width;
-        int dx = t_x - x;
-        int dy = t_y - y;
-        int jd = dx * dx + dy * dy;
-        if(jd <= 1){
-            Role role = target.getRole();
-            role.setHp(role.getHp() - creature.getAtk());
-            target.updateHp();
-        }
+        this.observer.creatureNotify(this);
     }
 
     synchronized public boolean hitByBullet(BulletLabel bullet){
@@ -373,7 +371,7 @@ public class CreatureLabel extends JLabel {
         if(this.creature.isDead()){
             return;
         }
-        this.creature.setHp(this.creature.getHp() - this.gameFrame.getRoleLabel().getRole().getAtk());
+        this.creature.setHp(this.creature.getHp() - this.singleGameFrame.getRoleLabel().getRole().getAtk());
         this.updateHpBar();
         if(!this.detected) {
             if(this.creature.getAtkMode()){
@@ -428,10 +426,11 @@ public class CreatureLabel extends JLabel {
 
     synchronized public void updateHpBar(){
         this.hpBar.upDateHpBar();
-        if(this.creature.isDead()){
+        if(this.creature.isDead() && !this.killed){
+            this.killed = true;
             this.setVisible(false);
             this.thread.interrupt();
-            this.gameFrame.killMonster();
+            this.observer.creatureDied(this);
         }
     }
 }

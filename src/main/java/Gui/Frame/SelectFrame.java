@@ -15,7 +15,20 @@ public class SelectFrame extends JFrame{
     private JComboBox<String> modSelect;
     private JComboBox<String> levelSelect;
 
-    public SelectFrame(){
+    static volatile private SelectFrame instance = null;
+
+    static  public SelectFrame getInstance(){
+        if(instance == null){
+            synchronized (SelectFrame.class){
+                if(instance == null){
+                    instance = new SelectFrame();
+                }
+            }
+        }
+        return instance;
+    }
+
+    private SelectFrame(){
 
         jLayeredPane = new JLayeredPane();
 
