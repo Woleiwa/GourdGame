@@ -12,14 +12,21 @@ public class Client {
     private Socket socket;
     private ClientFrame clientFrame;
 
-    public Client(String role, int level){
+    public Client(String role, int level) throws IOException {
         this.role = role;
         this.level = level;
-        try {
-            socket = new Socket("172.24.41.230",8080);//ip地址要根据服务器运行的电脑以及网络环境修改
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        File file = new File("setting/ip/ip.txt");
+        InputStream fin = new FileInputStream(file);
+        StringBuffer line = new StringBuffer();
+        int num = fin.available();
+        for (int i = 0; i < num; i++) {
+            line.append((char) fin.read());
         }
+        String ip = line.toString();
+        System.out.println(ip);
+        socket = new Socket(ip,8080);//ip地址要根据服务器运行的电脑以及网络环境修改
+
     }
 
     public void constructConnect() throws IOException {

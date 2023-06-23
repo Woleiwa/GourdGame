@@ -1,6 +1,7 @@
 package Gui.Facade;
 
 import Gui.Frame.SingleGameFrame;
+import Gui.Frame.WarningFrame;
 import Network.Client;
 
 import java.io.IOException;
@@ -12,11 +13,18 @@ public class GameFacade {
             singleGameFrame.setVisible(true);
         }
         else if (mod == 1){
-            Client client = new Client(role, level);
+            Client client;
             try {
-                client.constructConnect();
+                client = new Client(role, level);
+                try {
+                    client.constructConnect();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } catch (IOException e) {
-                e.printStackTrace();
+                String warning = "Please check the ip address in setting/ip/ip.txt.";
+                WarningFrame warningFrame = new WarningFrame(warning);
+                warningFrame.setVisible(true);
             }
         }
     }
